@@ -1,0 +1,3 @@
+rootProject.name = 'cruzz_app'
+
+include ':app'
