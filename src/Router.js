@@ -8,6 +8,7 @@ import {Thumbnail, View} from 'native-base';
 import LoginForm from './UI/components/Authentication/LoginForm/LoginForm';
 import SignupForm from './UI/components/Authentication/SignupForm/SignupForm';
 import SplashScreen from './UI/components/SplashScreen/SplashScreen';
+import Settings from './UI/components/Settings/Settings';
 import CustomDrawerContentComponent from './UI/components/Main/Drawer/CustomDrawerContentComponent/CustomDrawerContentComponent';
 import Feed from './UI/components/Main/Tabs/Feed/Feed'
 import Profile from './UI/components/Main/Tabs/Profile/Profile'
@@ -18,6 +19,7 @@ const RootStack = createStackNavigator(
     SplashScreen: { screen: SplashScreen},
     Login: { screen: LoginForm},
     SignUp: { screen: SignupForm},
+    Settings: { screen: Settings},
     Drawer: {
       screen:  createDrawerNavigator(
       {
