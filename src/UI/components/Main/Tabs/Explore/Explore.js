@@ -1,15 +1,25 @@
 import React, {Component} from 'react';
-import { View, Text } from "react-native";
+// import { View, Text, Button } from "react-native";
+import { Container, Header, Item, Input, Icon, Button, Text } from 'native-base';
 
 class Explore extends Component {
 
     render() {
         return(
-            <View>
-                <Text>
-                    Explore
-                </Text>
-            </View>
+              <Container>
+              <Header searchBar rounded style={{
+                  backgroundColor :'#3e37ff'
+              }}>
+                <Item>
+                  <Icon name="ios-search" />
+                  <Input placeholder="Search" style={{color: '#c6c4ff'}} />
+                  <Icon name="ios-people" />
+                </Item>
+                <Button transparent>
+                  <Text>Search</Text>
+                </Button>
+              </Header>
+            </Container>
             );
     }
 }

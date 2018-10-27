@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Image } from 'react-native';
 import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
+import Image from 'react-native-remote-svg';
+
 export default class CardOne extends Component {
   render() {
     return (
         <Card>
         <CardItem>
             <Left>
-            <Thumbnail source={require('../../../res/load.gif')} />
+            <Thumbnail source={require('../../../../images/profile.jpg')} />
             <Body>
                 <Text>Bla Bla Bla</Text>
                 <Text note>GeekyAnts</Text>
@@ -15,7 +16,7 @@ export default class CardOne extends Component {
             </Left>
         </CardItem>
         <CardItem cardBody>
-            <Image source={require('../../../res/load.gif')} style={{height: 50, width: 50, flex: 1}}/>
+            <Image source={require('../../../../images/profile.jpg')} style={{height: 50, width: 50, flex: 1}}/>
         </CardItem>
         <CardItem>
             <Left>

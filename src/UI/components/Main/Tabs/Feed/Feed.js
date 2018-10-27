@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import { View, ScrollView } from "react-native";
 import CardOne from '../../Cards/CardOne'
 import CardTwo from '../../Cards/CardTwo'
-
-import { ListItem, Thumbnail, Text, Button , Left, Body, Right } from 'native-base';
+import MyHeader from '../../MyHeader/MyHeader'
+import { ListItem, Thumbnail, Text , Left, Body, Right } from 'native-base';
 
 class Feed extends Component {
 
@@ -16,8 +16,8 @@ class Feed extends Component {
             }}>
                 <View style={{
                     backgroundColor: 'white',
-
                 }}>
+                    <MyHeader name="Feed" click={()=>this.props.navigation.toggleDrawer()} color='#39acef'/>
                     <ListItem avatar>
                         <Left>
                             <Thumbnail source={require('../../../../res/load.gif')} />

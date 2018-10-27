@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { View, Text, TextInput, Image, Button, ScrollView } from "react-native";
+import { View, Text, TextInput, Button, ScrollView } from "react-native";
+import Image from 'react-native-remote-svg'
 
 class loginForm extends Component {
     render() {
@@ -32,7 +33,7 @@ class loginForm extends Component {
                         cruzz
                     </Text>
     
-                    <Image source={require('../../../res/load.gif')} />
+                    <Image source={require('../../../../images/index3.svg')} />
                 
                 </View>
     
