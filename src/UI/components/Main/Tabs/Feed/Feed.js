@@ -4,6 +4,7 @@ import CardOne from '../../Cards/CardOne'
 import CardTwo from '../../Cards/CardTwo'
 import MyHeader from '../../MyHeader/MyHeader'
 import { ListItem, Thumbnail, Text , Left, Body, Right } from 'native-base';
+import Status from '../../Status/Status.js';
 
 class Feed extends Component {
 
@@ -31,6 +32,7 @@ class Feed extends Component {
                         </Right>
                     </ListItem>
                 </View>
+                <Status />
                 <ScrollView>
                     <CardTwo/>
                     <CardOne/>

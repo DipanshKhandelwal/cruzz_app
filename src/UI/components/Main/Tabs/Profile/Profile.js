@@ -4,6 +4,7 @@ import CardOne from "../../Cards/CardOne";
 import CardTwo from "../../Cards/CardTwo";
 import { Left, Right, Body, ListItem, Thumbnail, Input, Item, Content, Textarea } from "native-base";
 import MyHeader from '../../MyHeader/MyHeader';
+import Status from '../../Status/Status.js';
 
 
 class Profile extends Component {
@@ -23,6 +24,7 @@ class Profile extends Component {
                   shadowOpacity: 1,
                   shadowOffset: { width: 5, height: 5 },
                   margin: 5,
+                  marginBottom: 0,
                   elevation: 3
               }}>
                 <View style={{
@@ -56,22 +58,8 @@ class Profile extends Component {
                   <Text>Daddu ka status</Text>
                 </View>
               </View>
-              <View style={{
-                  backgroundColor: 'white',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  marginLeft: 5,
-                  marginRight: 5,
-                  borderRadius: 5,
-                  shadowColor: '#ffffff',
-                  shadowOpacity: 1,
-                  shadowOffset: { width: 5, height: 5 },
-                  elevation: 3
-              }}>
 
-                <Textarea rowSpan={5} placeholder="Whats in your mind !!" style={{ opacity: 0.6 }} />
-
-              </View>
+              <Status />
 
               <CardTwo/>
               <CardOne/>
