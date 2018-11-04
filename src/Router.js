@@ -117,7 +117,7 @@ const RootStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'Drawer',
+    initialRouteName: 'Login',
     navigationOptions: {
       header: null
     }

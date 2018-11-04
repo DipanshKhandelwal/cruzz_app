@@ -1,25 +1,27 @@
 import React, {Component} from 'react';
-import { View, Text, TextInput, Button, ScrollView } from "react-native";
+import { View, Text, TextInput, Button, TouchableOpacity } from "react-native";
 import Image from 'react-native-remote-svg'
 
 class loginForm extends Component {
     render() {
         return(
-            <ScrollView
+            <View
                 style={{
-                    height: '100%',
-                    backgroundColor: '#84aff4',
+                    display: 'flex',
+                    flex: 1,
+                    backgroundColor: '#ebf7f9',
+                    padding: 0
                 }}
             >
     
             <View style={{
-                height: '100%',
                 justifyContent: 'space-between',
                 alignItems: 'center',
-                backgroundColor: '#9ec3ff',
+                backgroundColor: '#fff',
                 marginTop: 20,
                 marginRight: 15,
-                marginLeft: 15
+                marginLeft: 15,
+                elevation: 10
             }}>
             
                 <View style={{
@@ -27,13 +29,15 @@ class loginForm extends Component {
                     justifyContent: 'space-evenly',
                     alignItems: 'center',
                 }}>
+
+                    <Image source={require('../../../../images/index3.svg')} />
+
                     <Text style={{
                         fontSize: 80,
                     }} >
                         cruzz
                     </Text>
     
-                    <Image source={require('../../../../images/index3.svg')} />
                 
                 </View>
     
@@ -53,9 +57,8 @@ class loginForm extends Component {
                             borderWidth: .2,
                             width: '100%',
                             height: 43,
-                            backgroundColor: '#84aff4',
                             color: '#3f3f3f',
-                            borderRadius: 17
+                            // borderRadius: 17
                     }}/>
     
                     <TextInput
@@ -66,10 +69,9 @@ class loginForm extends Component {
                             borderWidth: .2,
                             width: '100%',
                             height: 43,
-                            backgroundColor: '#84aff4',
                             margin: 10,
                             color: '#3f3f3f',
-                            borderRadius: 17
+                            // borderRadius: 17
                         }}
                         // onChangeText={(text) => this.setState({text})}
                         // value={this.state.text}
@@ -84,21 +86,21 @@ class loginForm extends Component {
                             style={{
                                 color: 'blue',
                             }}
-                            onPress={() => this.props.navigation.navigate('SignUp')}
+                            onPress={() => this.props.navigation.navigate('Drawer')}
                             // onChangeText={(text) => this.setState({text})}
                             // value={this.state.text}
                         />
                     </View>
     
-    
-                    <Text>
-                        Forgot Password ?
-                    </Text>
-    
+                    <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')} >
+                        <Text>
+                            Not a user yet?
+                        </Text>
+                    </TouchableOpacity>
     
                 </View>
             </View>
-            </ScrollView>
+            </View>
             );
     }
 }
