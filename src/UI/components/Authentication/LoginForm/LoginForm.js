@@ -1,8 +1,24 @@
 import React, {Component} from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity } from "react-native";
-import Image from 'react-native-remote-svg'
+import Image from 'react-native-remote-svg';
+import { connect } from 'react-redux';
+import { emailChanged, passwordChanged, loginUser } from '../actions';
 
-class loginForm extends Component {
+class LoginForm extends Component {
+
+    onEmailChange(text) {
+        this.props.emailChanged(text);
+    }
+
+    onPasswordChange(text) {
+        this.props.passwordChanged(text);
+    }
+
+    onButtonPress() {
+        const { email, password } = this.props;
+        this.props.loginUser({ email, password });
+    }
+
     render() {
         return(
             <View
@@ -50,7 +66,7 @@ class loginForm extends Component {
                     }}>
     
                     <TextInput
-                        placeholder = 'Username'
+                        placeholder = 'Email'
                         style={{
                             textAlign: 'center',
                             borderColor: 'gray',
@@ -59,7 +75,10 @@ class loginForm extends Component {
                             height: 43,
                             color: '#3f3f3f',
                             // borderRadius: 17
-                    }}/>
+                        }}
+                        onChangeText={this.onEmailChange.bind(this)}
+                        value={this.props.email}
+                    />
     
                     <TextInput
                         placeholder = 'Password'
@@ -73,9 +92,13 @@ class loginForm extends Component {
                             color: '#3f3f3f',
                             // borderRadius: 17
                         }}
-                        // onChangeText={(text) => this.setState({text})}
-                        // value={this.state.text}
+                        onChangeText={this.onPasswordChange.bind(this)}
+                        value={this.props.password}
                     />
+
+                    <Text style={ styles.errorTextStyle }>
+                        {this.props.error}
+                    </Text>
     
                     <View style={{
                         margin: 10,
@@ -105,4 +128,18 @@ class loginForm extends Component {
     }
 }
 
-export default loginForm;
+const styles = {
+    errorTextStyle: {
+        fontSize: 20,
+        alignSelf: 'center',
+        color: 'red'
+    }
+};
+
+const mapStatetoProps = ({ auth }) => {
+    const { email, password, error, user, loading } = auth;
+
+    return{ email, password, error, user, loading };
+};
+
+export default connect(mapStatetoProps, { emailChanged, passwordChanged, loginUser } )(LoginForm);
