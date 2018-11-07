@@ -1,8 +1,50 @@
 import React, {Component} from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity } from "react-native";
-import Image from 'react-native-remote-svg'
+import Image from 'react-native-remote-svg';
+import { signUpEmailChanged, signUpUsernameChanged, signUpPasswordChanged, signUpConfirmPasswordChanged, signUpUser } from '../../../../actions';
+import { connect } from 'react-redux';
+import { Spinner } from 'native-base';
+import { bindActionCreators } from 'redux';
 
-class signupForm extends Component {
+class SignupForm extends Component {
+
+    onEmailChange(text) {
+        this.props.signUpEmailChanged(text);
+    }
+
+    onUsernameChange(text) {
+        this.props.signUpUsernameChanged(text);
+    }
+
+    onPasswordChange(text) {
+        this.props.signUpPasswordChanged(text);
+    }
+
+    onConfirmPasswordChange(text) {
+        this.props.signUpConfirmPasswordChanged(text);
+    }
+
+    onSignUpButtonPress() {
+        const { email, password } = this.props;
+        this.props.signUpUser({ email, password });
+    }
+
+    renderSignUpButton() {
+        if (this.props.loading) {
+            return <Spinner color="blue" />;
+        }
+
+        return(
+            <Button
+                title="Register"
+                style={{
+                    color: 'blue',
+                }}
+                // onPress={() => this.props.navigation.navigate('Drawer')}
+                onPress={() => this.onSignUpButtonPress()}
+            />
+        );
+    }
 
     render() {
         return(
@@ -60,7 +102,10 @@ class signupForm extends Component {
                             height: 38,
                             color: '#3f3f3f',
                             // borderRadius: 17
-                    }}/>
+                        }}
+                        onChangeText={this.onEmailChange.bind(this)}
+                        value={this.props.email}
+                    />
     
                     <TextInput
                         placeholder = 'Username'
@@ -74,8 +119,8 @@ class signupForm extends Component {
                             color: '#3f3f3f',
                             // borderRadius: 17
                         }}
-                        // onChangeText={(text) => this.setState({text})}
-                        // value={this.state.text}
+                        onChangeText={this.onUsernameChange.bind(this)}
+                        value={this.props.username}
                     />
 
                     <TextInput
@@ -88,7 +133,10 @@ class signupForm extends Component {
                             height: 38,
                             color: '#3f3f3f',
                             // borderRadius: 17
-                    }}/>
+                        }}
+                        onChangeText={this.onPasswordChange.bind(this)}
+                        value={this.props.password}    
+                    />
     
                     <TextInput
                         placeholder = 'Confirm Password'
@@ -102,25 +150,21 @@ class signupForm extends Component {
                             color: '#3f3f3f',
                             // borderRadius: 17
                         }}
-                        // onChangeText={(text) => this.setState({text})}
-                        // value={this.state.text}
+                        onChangeText={this.onConfirmPasswordChange.bind(this)}
+                        value={this.props.confirmPassword}
                     />
+    
+                    <Text style={ styles.errorTextStyle }>
+                        {this.props.error}
+                    </Text>
     
                     <View style={{
                         margin: 10,
                         width: '100%',
                     }}>
-                        <Button
-                            title="Register"
-                            style={{
-                                color: 'blue',
-                            }}
-                            // onPress={() => this.props.navigation.navigate('SignUp')}
-                            // onChangeText={(text) => this.setState({text})}
-                            // value={this.state.text}
-                        />
+                        {this.renderSignUpButton()}
                     </View>
-    
+
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('Login')} >
                         <Text>
                             Already a member? Login here 
@@ -134,4 +178,27 @@ class signupForm extends Component {
     }
 }
 
-export default signupForm;
+const styles = {
+    errorTextStyle: {
+        fontSize: 20,
+        alignSelf: 'center',
+        color: 'red'
+    }
+};
+
+const mapStatetoProps = ({ auth }) => {
+    const { signUpEmail, signUpUsername, signUpPassword, signUpConfirmPassword, signUpError, user, signUpLoading } = auth;
+    return{ email: signUpEmail, username: signUpUsername, password: signUpPassword, confirmPassword: signUpConfirmPassword , error: signUpError, user, loading: signUpLoading };
+};
+
+const matchDispatchToProps = ( dispatch ) => {
+    return bindActionCreators({
+        signUpUser: signUpUser,
+        signUpEmailChanged: signUpEmailChanged,
+        signUpUsernameChanged: signUpUsernameChanged,
+        signUpPasswordChanged: signUpPasswordChanged,
+        signUpConfirmPasswordChanged: signUpConfirmPasswordChanged
+    }, dispatch);
+}
+
+export default connect(mapStatetoProps, matchDispatchToProps )(SignupForm);
