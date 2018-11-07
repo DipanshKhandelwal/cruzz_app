@@ -2,21 +2,40 @@ import React, {Component} from 'react';
 import { View, Text, TextInput, Button, TouchableOpacity } from "react-native";
 import Image from 'react-native-remote-svg';
 import { connect } from 'react-redux';
-import { emailChanged, passwordChanged, loginUser } from '../actions';
+import { loginEmailChanged, loginPasswordChanged, loginUser } from '../../../../actions';
+import { Spinner } from 'native-base';
+import { bindActionCreators } from 'redux';
 
 class LoginForm extends Component {
 
     onEmailChange(text) {
-        this.props.emailChanged(text);
+        this.props.loginEmailChanged(text);
     }
 
     onPasswordChange(text) {
-        this.props.passwordChanged(text);
+        this.props.loginPasswordChanged(text);
     }
 
-    onButtonPress() {
+    onLoginButtonPress() {
         const { email, password } = this.props;
         this.props.loginUser({ email, password });
+    }
+
+    renderLoginButton() {
+        if (this.props.loading) {
+            return <Spinner color="blue" />;
+        }
+
+        return(
+            <Button
+                title="Login"
+                style={{
+                    color: 'blue',
+                }}
+                // onPress={() => this.props.navigation.navigate('Drawer')}
+                onPress={() => this.onLoginButtonPress()}
+            />
+        );
     }
 
     render() {
@@ -104,15 +123,7 @@ class LoginForm extends Component {
                         margin: 10,
                         width: '100%',
                     }}>
-                        <Button
-                            title="Login"
-                            style={{
-                                color: 'blue',
-                            }}
-                            onPress={() => this.props.navigation.navigate('Drawer')}
-                            // onChangeText={(text) => this.setState({text})}
-                            // value={this.state.text}
-                        />
+                        {this.renderLoginButton()}
                     </View>
     
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')} >
@@ -137,9 +148,16 @@ const styles = {
 };
 
 const mapStatetoProps = ({ auth }) => {
-    const { email, password, error, user, loading } = auth;
-
-    return{ email, password, error, user, loading };
+    const { loginEmail, loginPassword, loginError, user, loginLoading } = auth;
+    return{ email: loginEmail, password: loginPassword, error: loginError, user, loading: loginLoading };
 };
 
-export default connect(mapStatetoProps, { emailChanged, passwordChanged, loginUser } )(LoginForm);
+const matchDispatchToProps = ( dispatch ) => {
+    return bindActionCreators({
+        loginUser: loginUser,
+        loginEmailChanged: loginEmailChanged,
+        loginPasswordChanged: loginPasswordChanged
+    }, dispatch);
+}
+
+export default connect(mapStatetoProps, matchDispatchToProps )(LoginForm);
