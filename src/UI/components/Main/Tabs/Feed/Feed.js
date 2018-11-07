@@ -13,7 +13,7 @@ class Feed extends Component {
             <View style={{
                 width: '100%',
                 height: '100%',
-                backgroundColor: '#9ec3ff'
+                backgroundColor: '#ebf7f9'
             }}>
                 <View style={{
                     backgroundColor: 'white',
@@ -32,8 +32,8 @@ class Feed extends Component {
                         </Right>
                     </ListItem>
                 </View>
-                <Status />
                 <ScrollView>
+                    <Status />
                     <CardTwo/>
                     <CardOne/>
                     <CardTwo/>

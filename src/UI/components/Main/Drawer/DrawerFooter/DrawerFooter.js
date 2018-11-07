@@ -17,9 +17,14 @@ class drawerFooter extends Component {
             }} >
         
         
-            <Button transparent style={styles.buttonStyle}>
+            <Button transparent style={styles.buttonStyle} onPress={()=> this.props.navigation.navigate('Login')}>
                 <Icon name='sign-in' size={25} style={{marginRight: 30}} color='#1979e8'/>
                 <Text style={{fontWeight: 'bold'}} >Log In</Text>
+            </Button>
+
+            <Button transparent style={styles.buttonStyle} onPress={()=> this.props.navigation.navigate('SignUp')}>
+                <Icon name='sign-in' size={25} style={{marginRight: 30}} color='#003777'/>
+                <Text style={{fontWeight: 'bold'}} >Sign Up</Text>
             </Button>
         
             <Button transparent style={styles.buttonStyle}>

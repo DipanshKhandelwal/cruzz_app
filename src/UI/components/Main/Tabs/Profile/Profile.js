@@ -11,7 +11,7 @@ class Profile extends Component {
 
     render() {
         return(
-            <ScrollView>
+            <ScrollView style={{ backgroundColor: '#ebf7f9' }} >
               <MyHeader name="Profile" click={()=>this.props.navigation.toggleDrawer()} color='#ff3838' />
 
 
