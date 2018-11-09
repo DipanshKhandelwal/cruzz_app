@@ -11,3 +11,5 @@ export const SIGN_UP_CONFIRM_PASSWORD_CHANGED = 'sign_up_confirm_password_change
 export const SIGN_UP_USER_SUCCESS = 'sign_up_user_success';
 export const SIGN_UP_USER_FAIL = 'sign_up_user_fail';
 export const SIGN_UP_USER = 'sign_up_user';
+
+export const LOGOUT = 'logout';

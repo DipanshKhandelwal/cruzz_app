@@ -8,6 +8,7 @@ import {
     SIGN_UP_USER
 } from './types';
 const axios = require('axios');
+import { REST_URL } from '../UI/values/strings.js';
 
 export const signUpEmailChanged = (text) => {
     return {
@@ -37,12 +38,44 @@ export const signUpConfirmPasswordChanged = (text) => {
     };
 };
 
-export const signUpUser = ({ email, password }) => {
-    console.log(email);
-    console.log(password);
+export const signUpUser = ({ email, username, password }) => {
     return (dispatch) => {
         dispatch({ type: SIGN_UP_USER });
-    };
+        console.log("email", email)
+        console.log("username", username)
+        console.log("password", password)
+        axios.post(
+            "https://cruzz.herokuapp.com/api/authentication/users/registration",
+            {
+                "user": {
+                    email: email,
+                    username: username,
+                    password: password
+                }
+            }
+        )
+        .then((response)=>{
+            axios.defaults.headers.common['Authorization'] = 'Token '+response.data.user.token;
+            axios.get(
+                `https://cruzz.herokuapp.com/api/profile/retrieve/${response.data.user.username}/`
+            ).then(
+                (response) => {
+                    signUpUserSuccess(dispatch,{
+                        user: response.data.user,
+                        profile: response.data.profile,
+                    });
+                    console.log(response.data);
+                })
+                .catch((error)=>{
+                    console.log("error", error)
+                    loginUserFailed(dispatch)
+                })
+        })
+        .catch((error)=>{
+            console.log("error", error)
+            signUpUserFailed(dispatch)
+        })
+    }
 };
 
 const signUpUserFailed = (dispatch) => {

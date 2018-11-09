@@ -1,6 +1,7 @@
 import {
     // LOGIN
     LOGIN_EMAIL_CHANGED,
+    LOGIN_USERNAME_CHANGED,
     LOGIN_PASSWORD_CHANGED,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL,
@@ -12,13 +13,15 @@ import {
     SIGN_UP_CONFIRM_PASSWORD_CHANGED,
     SIGN_UP_USER_SUCCESS,
     SIGN_UP_USER_FAIL,
-    SIGN_UP_USER
+    SIGN_UP_USER,
+    LOGOUT
 } from '../actions/types';
 
 const INITIAL_STATE = {
     // LOGIN
     loginEmail: '',
-    loginPassword: '',
+    loginUsername: 'cruzzapp',
+    loginPassword: 'cruzzapppass',
     loginError: '',
     loginLoading: false,
     // SIGN UP
@@ -30,6 +33,7 @@ const INITIAL_STATE = {
     signUpLoading: false,
     // COMMON
     user: null,
+    profile: null
 };
 
 export default (state=INITIAL_STATE, action) => {
@@ -38,6 +42,9 @@ export default (state=INITIAL_STATE, action) => {
         // LOGIN
         case LOGIN_EMAIL_CHANGED:
             return {...state, loginEmail: action.payload};
+        
+        case LOGIN_USERNAME_CHANGED:
+            return {...state, loginUsername: action.payload};
 
         case LOGIN_PASSWORD_CHANGED:
             return {...state, loginPassword: action.payload};
@@ -46,7 +53,7 @@ export default (state=INITIAL_STATE, action) => {
             return {...state, loginLoading: true, loginError: ''};
 
         case LOGIN_USER_SUCCESS:
-            return {...state, ...INITIAL_STATE, user: action.payload};
+            return {...state, ...INITIAL_STATE, user: action.payload.user, profile: action.payload.profile};
             
         case LOGIN_USER_FAIL:
             return {...state, loginError: 'Authentication Failed', loginPassword: '', loginLoading: false};
@@ -60,20 +67,30 @@ export default (state=INITIAL_STATE, action) => {
             return {...state, signUpUsername: action.payload};
 
         case SIGN_UP_PASSWORD_CHANGED:
-            return {...state, signUpPassword: action.payload};
+            if(state.signUpConfirmPassword == action.payload)
+                return {...state, signUpPassword: action.payload, signUpError: ''};
+            else
+                return {...state, signUpPassword: action.payload, signUpError: 'Passwords do not match'};
 
         case SIGN_UP_CONFIRM_PASSWORD_CHANGED:
-            return {...state, signUpConfirmPassword: action.payload};
+            if(state.signUpPassword == action.payload)
+                return {...state, signUpConfirmPassword: action.payload, signUpError: ''};
+            else
+                return {...state, signUpConfirmPassword: action.payload, signUpError: 'Passwords do not match'};
 
         case SIGN_UP_USER:
             return {...state, signUpLoading: true, signUpError: ''};
 
         case SIGN_UP_USER_SUCCESS:
-            return {...state, ...INITIAL_STATE, user: action.payload};
+            return {...state, ...INITIAL_STATE, user: action.payload.user, profile: action.payload.profile};
             
         case SIGN_UP_USER_FAIL:
-            return {...state, signUpError: 'Authentication Failed', signUpPassword: '', signUpLoading: false};
+            return {...state, signUpError: 'Authentication Failed', signUpPassword: '', signUpConfirmPassword: '', signUpLoading: false};
 
+
+        // LOGOUT
+        case LOGOUT:
+            return {...state, ...INITIAL_STATE, user: null, profile: null};
 
         default:
             return state;
