@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import { Textarea, Button } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const status = () => {
+const status = (props) => {
     return(
         <View style={{
             backgroundColor: 'white',
@@ -19,7 +19,6 @@ const status = () => {
             elevation: 3
         }}>
 
-            <Textarea rowSpan={4} placeholder="Whats in your mind !!" style={{ opacity: 0.6 }} />
             <View
                 style={{ 
                     display: 'flex',
@@ -27,6 +26,7 @@ const status = () => {
                  }} >
 
                 <Button
+                    onPress={props.press}
                     transparent
                     style={{
                         flex :1,
