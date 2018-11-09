@@ -1,75 +1,166 @@
+import _ from 'lodash';
 import React, {Component} from 'react';
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text, Image, RefreshControl } from "react-native";
 import CardOne from "../../Cards/CardOne";
-import CardTwo from "../../Cards/CardTwo";
 import { Left, Right, Body, ListItem, Thumbnail, Input, Item, Content, Textarea } from "native-base";
 import MyHeader from '../../MyHeader/MyHeader';
 import Status from '../../Status/Status.js';
-
+import Following from '../../Following/Following.js';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {
+fetchFollowers,
+fetchFollowing,
+fetchAllPostCreated,
+postReset,
+postDescriptionChanged,
+postBodyChanged,
+postTitleChanged,
+userSelected,
+postSelected
+} from '../../../../../actions';
 
 class Profile extends Component {
+  
+    componentDidMount() {
+      this.props.fetchFollowers(this.props.user);
+      this.props.fetchFollowing(this.props.user);
+      this.props.fetchAllPostCreated(this.props.user);
+      this.props.postReset();
+    }
+
+    _onRefresh = () => {
+      this.props.fetchFollowers(this.props.user);
+      this.props.fetchFollowing(this.props.user);
+      this.props.fetchAllPostCreated(this.props.user);
+      this.props.postReset();
+    }
 
     render() {
-        return(
-            <ScrollView style={{ backgroundColor: '#ebf7f9' }} >
-              <MyHeader name="Profile" click={()=>this.props.navigation.toggleDrawer()} color='#ff3838' />
+
+      if(!this.props.user){
+        this.props.navigation.navigate('Login')
+      }
+
+      return(
+          <ScrollView
+            style={{ backgroundColor: '#ebf7f9' }}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.props.loading}
+                onRefresh={this._onRefresh}
+              />
+            }
+          >
+            <MyHeader name="Profile" click={()=>this.props.navigation.toggleDrawer()} color='#ff3838' />
 
 
+            <View style={{
+                backgroundColor: 'white',
+                display: 'flex',
+                flexDirection: 'column',
+                borderRadius: 5,
+                shadowColor: '#ffffff',
+                shadowOpacity: 1,
+                shadowOffset: { width: 5, height: 5 },
+                margin: 5,
+                marginBottom: 0,
+                elevation: 3
+            }}>
               <View style={{
-                  backgroundColor: 'white',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  borderRadius: 5,
-                  shadowColor: '#ffffff',
-                  shadowOpacity: 1,
-                  shadowOffset: { width: 5, height: 5 },
-                  margin: 5,
-                  marginBottom: 0,
-                  elevation: 3
-              }}>
-                <View style={{
-                  backgroundColor: '#3f3f3f',
-                  display: 'flex',
-                  flex :1,
-                  height: 100
-                }} />
+                background: 'transpaent',
+                display: 'flex',
+                flex :1,
+                height: 100,
+              }} >
 
-                <View style={{
-                  backgroundColor: '#ffffff',
-                  display: 'flex',
-                  flex :1,
-                  height: 90
-                }} />
+                {
+                  this.props.profile ? 
+                    <Image style={{
+                      display: 'flex',
+                      flex :1,
+                    }}
+                      source={{uri: this.props.profile.cover}}
+                    />
+                    :
+                    null
+                }
 
-                <View                
-                  style={{
-                    position: 'absolute',
-                    alignSelf: 'center',
-                    top: 60,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                  }} >
-                  <Thumbnail
-                    source={require('../../../../../images/profile.jpg')}
-                  />
-                  <Text style={{fontSize: 25, fontWeight: 'bold'}} >Monal Shadi</Text>
-                  <Text>Daddu ka status</Text>
-                </View>
               </View>
 
-              <Status />
+              <View style={{
+                backgroundColor: '#ffffff',
+                display: 'flex',
+                flex :1,
+                height: 90
+              }} />
 
-              <CardTwo/>
-              <CardOne/>
-              <CardTwo/>
-              <CardOne/>
-              <CardTwo/>
-              <CardOne/>
-          </ScrollView>
-        );
+              <View                
+                style={{
+                  position: 'absolute',
+                  alignSelf: 'center',
+                  top: 60,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }} >
+                {
+                    this.props.profile ? 
+                    <Thumbnail
+                        source={{ uri: this.props.profile.image }}
+                    />
+                    : 
+                    <Thumbnail source={require('../../../../../images/profile.jpg')} style={{ marginBottom: 10 }} />
+                }
+                <Text style={{fontSize: 25, fontWeight: 'bold'}} >
+                  {
+                    this.props.user ? this.props.user.username : "User Name"
+                  }
+                </Text>
+                <Text>
+                  Status . . .
+                </Text>
+              </View>
+            </View>
+
+            <Status press={()=> this.props.navigation.navigate('Post')} />
+            <Following
+              followers={ this.props.followers ? this.props.followers.length : 0 }
+              following={ this.props.following ? this.props.following.length : 0 }
+            />
+            {
+                _.map(this.props.posts, (item, index)=>
+                    <CardOne
+                        key={index}
+                        post={item}
+                    />
+                )
+            }
+        </ScrollView>
+      );
     }
 }
 
-export default Profile;
+const mapStatetoProps = (state) => {
+  const { following, followers, posts, loading } = state.profile;
+  const { user, profile } = state.auth;
+  const { post } = state.post;
+  return{ user, profile, following, followers, posts, loading, post };
+};
+
+const matchDispatchToProps = ( dispatch ) => {
+  return bindActionCreators({
+    fetchFollowing: fetchFollowing,
+    fetchFollowers: fetchFollowers,
+    fetchAllPostCreated: fetchAllPostCreated,
+    postReset: postReset,
+    postDescriptionChanged: postDescriptionChanged,
+    postBodyChanged: postBodyChanged,
+    postTitleChanged: postTitleChanged,
+    userSelected: userSelected,
+    postSelected: postSelected
+  }, dispatch);
+}
+
+export default connect(mapStatetoProps, matchDispatchToProps )(Profile);
