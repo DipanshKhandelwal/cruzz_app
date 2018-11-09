@@ -13,3 +13,5 @@ export const SIGN_UP_USER_FAIL = 'sign_up_user_fail';
 export const SIGN_UP_USER = 'sign_up_user';
 
 export const LOGOUT = 'logout';
+export const FEED_FETCH = 'all_posts_following'
+export const LOADING_FEED = 'loading_all_posts_following'
