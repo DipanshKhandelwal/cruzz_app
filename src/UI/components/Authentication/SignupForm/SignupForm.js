@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, Button, TouchableOpacity, ScrollView } from "react-native";
 import Image from 'react-native-remote-svg';
 import { signUpEmailChanged, signUpUsernameChanged, signUpPasswordChanged, signUpConfirmPasswordChanged, signUpUser } from '../../../../actions';
 import { connect } from 'react-redux';
@@ -25,8 +25,9 @@ class SignupForm extends Component {
     }
 
     onSignUpButtonPress() {
-        const { email, password } = this.props;
-        this.props.signUpUser({ email, password });
+        const { email, username, password, confirmPassword } = this.props;
+        if(!this.props.error)
+            this.props.signUpUser({ email, username, password });
     }
 
     renderSignUpButton() {
@@ -47,8 +48,13 @@ class SignupForm extends Component {
     }
 
     render() {
+
+        if(this.props.user) {
+            this.props.navigation.navigate('Drawer');
+        }
+
         return(
-            <View
+            <ScrollView
                 style={{
                     display: 'flex',
                     flex: 1,
@@ -76,7 +82,7 @@ class SignupForm extends Component {
                     <Image style={{ marginTop: 0, marginBottom: -10 }} source={require('../../../../images/index3.svg')} />
 
                     <Text style={{
-                        fontSize: 60,
+                        fontSize: 50,
                     }} >
                         cruzz
                     </Text>
@@ -134,6 +140,7 @@ class SignupForm extends Component {
                             color: '#3f3f3f',
                             // borderRadius: 17
                         }}
+                        secureTextEntry={true}
                         onChangeText={this.onPasswordChange.bind(this)}
                         value={this.props.password}    
                     />
@@ -147,9 +154,11 @@ class SignupForm extends Component {
                             width: '100%',
                             height: 38,
                             margin: 10,
+                            marginBottom: 0,
                             color: '#3f3f3f',
                             // borderRadius: 17
                         }}
+                        secureTextEntry={true}
                         onChangeText={this.onConfirmPasswordChange.bind(this)}
                         value={this.props.confirmPassword}
                     />
@@ -173,7 +182,7 @@ class SignupForm extends Component {
     
                 </View>
             </View>
-            </View>
+            </ScrollView>
             );
     }
 }

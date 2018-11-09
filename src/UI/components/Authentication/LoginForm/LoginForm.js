@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity } from "react-native";
+import { View, Text, TextInput, Button, TouchableOpacity, ScrollView } from "react-native";
 import Image from 'react-native-remote-svg';
 import { connect } from 'react-redux';
-import { loginEmailChanged, loginPasswordChanged, loginUser } from '../../../../actions';
+import { loginEmailChanged, loginUsernameChanged, loginPasswordChanged, loginUser } from '../../../../actions';
 import { Spinner } from 'native-base';
 import { bindActionCreators } from 'redux';
 
@@ -12,13 +12,17 @@ class LoginForm extends Component {
         this.props.loginEmailChanged(text);
     }
 
+    onUsernameChange(text) {
+        this.props.loginUsernameChanged(text);
+    }
+
     onPasswordChange(text) {
         this.props.loginPasswordChanged(text);
     }
 
     onLoginButtonPress() {
-        const { email, password } = this.props;
-        this.props.loginUser({ email, password });
+        const { email, username, password } = this.props;
+        this.props.loginUser({ email, username, password });
     }
 
     renderLoginButton() {
@@ -31,32 +35,41 @@ class LoginForm extends Component {
                 title="Login"
                 style={{
                     color: 'blue',
+                    marginBottom: 50
                 }}
-                // onPress={() => this.props.navigation.navigate('Drawer')}
                 onPress={() => this.onLoginButtonPress()}
             />
         );
     }
 
     render() {
+
+        if(this.props.user) {
+            this.props.navigation.navigate('Drawer');
+        }
+
         return(
-            <View
+            <ScrollView
                 style={{
                     display: 'flex',
                     flex: 1,
                     backgroundColor: '#ebf7f9',
-                    padding: 0
+                    padding: 0,
+                    margin: 0
                 }}
             >
     
             <View style={{
+                display: 'flex',
+                flex:1,
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 backgroundColor: '#fff',
                 marginTop: 20,
                 marginRight: 15,
                 marginLeft: 15,
-                elevation: 10
+                elevation: 10,
+                marginBottom: 30
             }}>
             
                 <View style={{
@@ -65,10 +78,10 @@ class LoginForm extends Component {
                     alignItems: 'center',
                 }}>
 
-                    <Image source={require('../../../../images/index3.svg')} />
+                    <Image source={require('../../../../images/index-no-spin.svg')} />
 
                     <Text style={{
-                        fontSize: 80,
+                        fontSize: 60,
                     }} >
                         cruzz
                     </Text>
@@ -83,20 +96,21 @@ class LoginForm extends Component {
                     padding: '5%',
                     marginBottom: 20
                     }}>
-    
+
                     <TextInput
-                        placeholder = 'Email'
+                        placeholder = 'Username'
                         style={{
                             textAlign: 'center',
                             borderColor: 'gray',
                             borderWidth: .2,
                             width: '100%',
-                            height: 43,
+                            height: 35,
+                            margin: 10,
                             color: '#3f3f3f',
                             // borderRadius: 17
                         }}
-                        onChangeText={this.onEmailChange.bind(this)}
-                        value={this.props.email}
+                        onChangeText={this.onUsernameChange.bind(this)}
+                        value={this.props.username}
                     />
     
                     <TextInput
@@ -106,11 +120,12 @@ class LoginForm extends Component {
                             borderColor: 'gray',
                             borderWidth: .2,
                             width: '100%',
-                            height: 43,
-                            margin: 10,
+                            height: 35,
                             color: '#3f3f3f',
                             // borderRadius: 17
                         }}
+                        type="password"
+                        secureTextEntry={true}
                         onChangeText={this.onPasswordChange.bind(this)}
                         value={this.props.password}
                     />
@@ -121,6 +136,7 @@ class LoginForm extends Component {
     
                     <View style={{
                         margin: 10,
+                        marginBottom: 5,
                         width: '100%',
                     }}>
                         {this.renderLoginButton()}
@@ -134,7 +150,7 @@ class LoginForm extends Component {
     
                 </View>
             </View>
-            </View>
+            </ScrollView>
             );
     }
 }
@@ -148,14 +164,15 @@ const styles = {
 };
 
 const mapStatetoProps = ({ auth }) => {
-    const { loginEmail, loginPassword, loginError, user, loginLoading } = auth;
-    return{ email: loginEmail, password: loginPassword, error: loginError, user, loading: loginLoading };
+    const { loginEmail, loginUsername, loginPassword, loginError, user, loginLoading } = auth;
+    return{ email: loginEmail, username: loginUsername, password: loginPassword, error: loginError, user, loading: loginLoading };
 };
 
 const matchDispatchToProps = ( dispatch ) => {
     return bindActionCreators({
         loginUser: loginUser,
         loginEmailChanged: loginEmailChanged,
+        loginUsernameChanged: loginUsernameChanged,
         loginPasswordChanged: loginPasswordChanged
     }, dispatch);
 }
