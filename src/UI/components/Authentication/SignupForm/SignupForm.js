@@ -79,7 +79,7 @@ class SignupForm extends Component {
                     alignItems: 'center',
                 }}>
 
-                    <Image style={{ marginTop: 0, marginBottom: -10 }} source={require('../../../../images/index3.svg')} />
+                    <Image style={{ marginTop: 0, marginBottom: -10 }} source={require('../../../../images/index-no-spin.svg')} />
 
                     <Text style={{
                         fontSize: 50,
