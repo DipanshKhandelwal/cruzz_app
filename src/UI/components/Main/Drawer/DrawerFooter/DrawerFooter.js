@@ -2,9 +2,17 @@ import React, {Component} from 'react';
 import { View, Text, StyleSheet } from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Button} from 'native-base';
+import { connect } from 'react-redux';
+import { logout } from '../../../../../actions';
+import { bindActionCreators } from 'redux';
 
-class drawerFooter extends Component {
+class DrawerFooter extends Component {
     render() {
+
+        if(!this.props.user){
+            this.props.navigation.navigate('Login')
+        }
+
         return(
             <View style={{
                 backgroundColor: '#e5e5e5',
@@ -17,7 +25,7 @@ class drawerFooter extends Component {
             }} >
         
         
-            <Button transparent style={styles.buttonStyle} onPress={()=> this.props.navigation.navigate('Login')}>
+            {/* <Button transparent style={styles.buttonStyle} onPress={()=> this.props.navigation.navigate('Login')}>
                 <Icon name='sign-in' size={25} style={{marginRight: 30}} color='#1979e8'/>
                 <Text style={{fontWeight: 'bold'}} >Log In</Text>
             </Button>
@@ -25,9 +33,13 @@ class drawerFooter extends Component {
             <Button transparent style={styles.buttonStyle} onPress={()=> this.props.navigation.navigate('SignUp')}>
                 <Icon name='sign-in' size={25} style={{marginRight: 30}} color='#003777'/>
                 <Text style={{fontWeight: 'bold'}} >Sign Up</Text>
-            </Button>
+            </Button> */}
         
-            <Button transparent style={styles.buttonStyle}>
+            <Button
+                transparent
+                style={styles.buttonStyle}
+                onPress={()=> this.props.logout()}
+            >
                 <Icon name='sign-out' size={25} style={{marginRight: 30}} color='#ce1b00' />
                 <Text style={{fontWeight: 'bold'}} >Log Out</Text>
             </Button>
@@ -37,7 +49,7 @@ class drawerFooter extends Component {
                 <Text style={{fontWeight: 'bold'}} >Settings</Text>
             </Button>
         
-            <Button transparent style={styles.buttonStyle} >
+            <Button transparent style={styles.buttonStyle} onPress={()=> this.props.navigation.navigate('Help')} >
                 <Icon name='question-circle' size={25} style={{marginRight: 30}} color='#2b3e5b'/>
                 <Text style={{fontWeight: 'bold'}} >Help</Text>
             </Button>
@@ -58,4 +70,15 @@ const styles = StyleSheet.create({
     }
 });
 
-export default drawerFooter;
+const mapStatetoProps = ({ auth }) => {
+    const { user } = auth;
+    return{ user };
+};
+
+const matchDispatchToProps = ( dispatch ) => {
+    return bindActionCreators({
+        logout
+    }, dispatch);
+}
+
+export default connect(mapStatetoProps, matchDispatchToProps)(DrawerFooter);

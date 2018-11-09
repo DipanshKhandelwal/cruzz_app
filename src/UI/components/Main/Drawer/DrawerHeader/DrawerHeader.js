@@ -1,33 +1,59 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { View, Text } from "react-native";
 import { Thumbnail } from 'native-base';
+import { connect } from 'react-redux';
 
-const drawerHeader = (props) => (
-    <View style={{
-        display: 'flex',
-        flex: 1,
-        flexDirection: 'column',
-        backgroundColor: '#d1d1d1',
-        padding: 20
-    }} >
-        <Thumbnail source={require('../../../../../images/profile.jpg')} style={{ marginBottom: 10 }} />
+class DrawerHeader extends Component {
+    render() {
 
-        <Text
-            style={{
-                fontWeight: 'bold',
-                fontSize: 20,
-                color: '#383838'
+        // if(!this.props.user){
+        //     this.props.navigation.navigate('Login')
+        // }
+
+        return (
+            <View style={{
+                display: 'flex',
+                flex: 1,
+                flexDirection: 'column',
+                backgroundColor: '#d1d1d1',
+                padding: 20
             }} >
-            Display Name
-        </Text>
 
-        <Text
-            style={{
-                fontSize: 16
-            }} >
-            @username
-        </Text>
-    </View>
-  );
+                {
+                    this.props.profile ? 
+                    <Thumbnail
+                        source={{ uri: this.props.profile.image }}
+                    />
+                    : 
+                    <Thumbnail source={require('../../../../../images/profile.jpg')} style={{ marginBottom: 10 }} />
+                }
 
-export default drawerHeader;
+                <Text
+                    style={{
+                        fontWeight: 'bold',
+                        fontSize: 20,
+                        color: '#383838'
+                    }} >
+                    Display Name
+                </Text>
+        
+                <Text
+                    style={{
+                        fontSize: 16
+                    }} >
+                    {
+                        this.props.user? this.props.user.username : "@username"
+                    }
+                </Text>
+            </View>
+          );
+    }
+} 
+
+const mapStatetoProps = ({ auth }) => {
+    const { user, profile } = auth;
+    return{ user, profile };
+};
+
+export default connect(mapStatetoProps)(DrawerHeader);
+
