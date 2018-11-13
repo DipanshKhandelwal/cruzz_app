@@ -11,6 +11,7 @@ import SplashScreen from './UI/components/SplashScreen/SplashScreen';
 import Settings from './UI/components/Settings/Settings';
 import Post from './UI/components/Main/Post/Post';
 import Help from './UI/components/Help/Help';
+import FollowersList from './UI/components/FollowersList/FollowersList';
 import CustomDrawerContentComponent from './UI/components/Main/Drawer/CustomDrawerContentComponent/CustomDrawerContentComponent';
 import Feed from './UI/components/Main/Tabs/Feed/Feed'
 import Profile from './UI/components/Main/Tabs/Profile/Profile'
