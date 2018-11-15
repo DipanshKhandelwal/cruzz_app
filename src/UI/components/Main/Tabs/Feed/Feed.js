@@ -81,6 +81,15 @@ class Feed extends Component {
                     {
                         _.map(this.props.feed, (item, index)=>
                             <CardOne
+                                refreshFeed={this._onRefresh}
+                                openPost={()=>this.props.navigation.navigate('OtherPost', {post: item})}
+                                openProfile={()=>{
+                                    if(item.author.username != this.props.username){
+                                        this.props.navigation.navigate('OtherProfile', {user: item.author})
+                                    }else{
+                                        this.props.navigation.navigate('Profile')
+                                    }
+                                }}
                                 key={index}
                                 post={item}
                             />

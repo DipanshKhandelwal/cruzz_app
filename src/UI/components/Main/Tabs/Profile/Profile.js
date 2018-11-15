@@ -134,8 +134,17 @@ class Profile extends Component {
             {
                 _.map(this.props.posts, (item, index)=>
                     <CardOne
-                        key={index}
-                        post={item}
+                      refreshFeed={this._onRefresh}
+                      openPost={()=>this.props.navigation.navigate('OtherPost', {post: item})}
+                      openProfile={()=>{
+                        if(item.author.username != this.props.username){
+                            this.props.navigation.navigate('OtherProfile', {user: item.author})
+                        }else{
+                            this.props.navigation.navigate('Profile')
+                        }
+                    }}
+                      key={index}
+                      post={item}
                     />
                 )
             }
