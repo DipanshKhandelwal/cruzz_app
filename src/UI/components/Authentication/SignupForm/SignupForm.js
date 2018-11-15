@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TextInput, Button, TouchableOpacity, ScrollView, Dimensions, ToastAndroid } from "react-native";
 import Image from 'react-native-remote-svg';
 import { signUpEmailChanged, signUpUsernameChanged, signUpPasswordChanged, signUpConfirmPasswordChanged, signUpUser } from '../../../../actions';
 import { connect } from 'react-redux';
@@ -50,20 +50,26 @@ class SignupForm extends Component {
     render() {
 
         if(this.props.user) {
-            this.props.navigation.navigate('Drawer');
+            ToastAndroid.show(' Confirm your email address ', ToastAndroid.SHORT);
+            this.props.navigation.navigate('ConfirmEmail')
         }
 
         return(
             <ScrollView
                 style={{
                     display: 'flex',
+                    height: Dimensions.get('window').height,
                     flex: 1,
                     backgroundColor: '#ebf7f9',
-                    padding: 0
+                    padding: 10,
+                    margin: 0
                 }}
             >
     
             <View style={{
+                display: 'flex',
+                flex:1,
+                height: Dimensions.get('window').height*.95,
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 backgroundColor: '#fff',
@@ -74,7 +80,6 @@ class SignupForm extends Component {
             }}>
             
                 <View style={{
-                    marginTop:10,
                     justifyContent: 'space-evenly',
                     alignItems: 'center',
                 }}>
@@ -84,7 +89,7 @@ class SignupForm extends Component {
                     <Text style={{
                         fontSize: 50,
                     }} >
-                        cruzz
+                        Vconnect
                     </Text>
     
                 
@@ -95,7 +100,8 @@ class SignupForm extends Component {
                     width: '100%',
                     alignItems: 'center',
                     padding: '5%',
-                    marginBottom: 20
+                    marginBottom: 20,
+                    marginTop: 0
                     }}>
     
                     <TextInput

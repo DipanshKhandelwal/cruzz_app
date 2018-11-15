@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TextInput, Button, TouchableOpacity, ScrollView, Dimensions } from "react-native";
 import Image from 'react-native-remote-svg';
 import { connect } from 'react-redux';
 import { loginEmailChanged, loginUsernameChanged, loginPasswordChanged, loginUser } from '../../../../actions';
@@ -52,9 +52,10 @@ class LoginForm extends Component {
             <ScrollView
                 style={{
                     display: 'flex',
+                    height: Dimensions.get('window').height,
                     flex: 1,
                     backgroundColor: '#ebf7f9',
-                    padding: 0,
+                    padding: 10,
                     margin: 0
                 }}
             >
@@ -62,6 +63,7 @@ class LoginForm extends Component {
             <View style={{
                 display: 'flex',
                 flex:1,
+                height: Dimensions.get('window').height*0.9,
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 backgroundColor: '#fff',
@@ -69,11 +71,10 @@ class LoginForm extends Component {
                 marginRight: 15,
                 marginLeft: 15,
                 elevation: 10,
-                marginBottom: 30
+                marginBottom: 30,
             }}>
             
                 <View style={{
-                    marginTop:50,
                     justifyContent: 'space-evenly',
                     alignItems: 'center',
                 }}>
@@ -83,7 +84,7 @@ class LoginForm extends Component {
                     <Text style={{
                         fontSize: 60,
                     }} >
-                        cruzz
+                        Vconnect
                     </Text>
     
                 
@@ -144,7 +145,7 @@ class LoginForm extends Component {
     
                     <TouchableOpacity onPress={() => this.props.navigation.navigate('SignUp')} >
                         <Text>
-                            Not a user yet?
+                            Not a user yet? Register here
                         </Text>
                     </TouchableOpacity>
     
