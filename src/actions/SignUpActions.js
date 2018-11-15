@@ -9,6 +9,7 @@ import {
 } from './types';
 const axios = require('axios');
 import { REST_URL } from '../UI/values/strings.js';
+import { ToastAndroid } from "react-native";
 
 export const signUpEmailChanged = (text) => {
     return {
@@ -54,23 +55,14 @@ export const signUpUser = ({ email, username, password }) => {
                 }
             }
         )
-        .then((response)=>{
-            axios.defaults.headers.common['Authorization'] = 'Token '+response.data.user.token;
-            axios.get(
-                `https://cruzz.herokuapp.com/api/profile/retrieve/${response.data.user.username}/`
-            ).then(
-                (response) => {
-                    signUpUserSuccess(dispatch,{
-                        user: response.data.user,
-                        profile: response.data.profile,
-                    });
-                    console.log(response.data);
-                })
-                .catch((error)=>{
-                    console.log("error", error)
-                    loginUserFailed(dispatch)
-                })
-        })
+        .then((response)=>
+        {
+            signUpUserSuccess(dispatch,{
+                user: null,
+                profile: null,
+            });
+        }
+        )
         .catch((error)=>{
             console.log("error", error)
             signUpUserFailed(dispatch)
@@ -83,6 +75,7 @@ const signUpUserFailed = (dispatch) => {
 };
 
 const signUpUserSuccess = ( dispatch, user ) => {
+    ToastAndroid.show(' Confirm your email address ', ToastAndroid.SHORT);
     dispatch({
         type: SIGN_UP_USER_SUCCESS,
         payload: user
