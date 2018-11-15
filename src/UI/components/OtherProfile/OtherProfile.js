@@ -14,6 +14,26 @@ class OtherProfile extends Component {
       following: null,
     }
 
+    follow = () => {
+      axios.defaults.headers.common['Authorization'] = 'Token '+this.props.user.token;
+      axios.post(
+          `https://cruzz.herokuapp.com/api/profile/${this.props.navigation.state.params.user.username}/follow`,
+      )
+      .then((response)=>{
+        this.props.navigation.navigate('OtherProfile', { user: {...this.props.navigation.state.params.user, following: true} })
+      })
+    }
+
+    unfollow = () => {
+      axios.defaults.headers.common['Authorization'] = 'Token '+this.props.user.token;
+      axios.delete(
+          `https://cruzz.herokuapp.com/api/profile/${this.props.navigation.state.params.user.username}/follow`,
+      )
+      .then((response)=>{
+        this.props.navigation.navigate('OtherProfile', { user: {...this.props.navigation.state.params.user, following: false} })
+      })
+    }
+
     renderFollowButton = () => {
       return(
         <Button full style={{ backgroundColor: '#1979e8c9', margin: 10}} onPress={()=>{
