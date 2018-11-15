@@ -1,6 +1,5 @@
 import React from 'react';
 import { createStackNavigator, createMaterialTopTabNavigator, createDrawerNavigator } from 'react-navigation';
-import {createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Image from 'react-native-remote-svg';
 import {Thumbnail, View} from 'native-base';
@@ -16,6 +15,7 @@ import CustomDrawerContentComponent from './UI/components/Main/Drawer/CustomDraw
 import Feed from './UI/components/Main/Tabs/Feed/Feed'
 import Profile from './UI/components/Main/Tabs/Profile/Profile'
 import Explore from './UI/components/Main/Tabs/Explore/Explore'
+import Web from './UI/components/Web/Web'
 
 const RootStack = createStackNavigator(
   {
@@ -24,13 +24,15 @@ const RootStack = createStackNavigator(
     SignUp: { screen: SignupForm},
     Settings: { screen: Settings},
     Help: { screen: Help},
+    FollowersList: { screen: FollowersList},
     Post: { screen: Post},
+    Web: { screen: Web },
     Drawer: {
       screen:  createDrawerNavigator(
       {
         Main: {
           screen:  createMaterialTopTabNavigator(
-          {
+        {
           Feed:
           { screen: Feed,
             navigationOptions: {
@@ -58,25 +60,25 @@ const RootStack = createStackNavigator(
               ),
             }
           }
-         },
-         {
-          tabBarPosition: 'bottom',
-          initialRouteName: 'Feed',
-          animationEnabled: true,
-          tabBarOptions: { 
-            showIcon: true,
-            showLabel: false,
-            pressColor: '#39acef',
-            style:{
-              backgroundColor: '#ffffff',
-              borderTopWidth:1,
-              borderTopColor:'#D3D3D3'
-            },
-            indicatorStyle: {
-              backgroundColor: "#39acef",
-            }
+        },
+        {
+        tabBarPosition: 'bottom',
+        initialRouteName: 'Feed',
+        animationEnabled: true,
+        tabBarOptions: { 
+          showIcon: true,
+          showLabel: false,
+          pressColor: '#39acef',
+          style:{
+            backgroundColor: '#ffffff',
+            borderTopWidth:1,
+            borderTopColor:'#D3D3D3'
           },
-         }),
+          indicatorStyle: {
+            backgroundColor: "#39acef",
+          }
+          },
+        }),
           navigationOptions: {
             drawerLabel: 'Home',
             drawerIcon: ({ tintColor }) => (
@@ -112,6 +114,17 @@ const RootStack = createStackNavigator(
               <Icon name="search" size={20} color="#3e37ff" />
             ),
           }
+        },
+        Web:
+        { screen: Web,
+          navigationOptions: {
+            drawerLabel: 'Webview',
+            drawerIcon: ({ tintColor }) => (
+              <View>
+                <Icon name="globe" size={25} color="#78c257" />
+              </View>
+            ),
+          },
         }
      },
      {
