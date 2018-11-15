@@ -9,6 +9,7 @@ import SignupForm from './UI/components/Authentication/SignupForm/SignupForm';
 import SplashScreen from './UI/components/SplashScreen/SplashScreen';
 import Settings from './UI/components/Settings/Settings';
 import Post from './UI/components/Main/Post/Post';
+import OtherPost from './UI/components/Main/Post/OtherPost';
 import Help from './UI/components/Help/Help';
 import FollowersList from './UI/components/FollowersList/FollowersList';
 import CustomDrawerContentComponent from './UI/components/Main/Drawer/CustomDrawerContentComponent/CustomDrawerContentComponent';
@@ -28,6 +29,7 @@ const RootStack = createStackNavigator(
     Help: { screen: Help},
     FollowersList: { screen: FollowersList},
     Post: { screen: Post},
+    OtherPost: { screen: OtherPost},
     OtherProfile: { screen: OtherProfile },
     ConfirmEmail: { screen: ConfirmEmail },
     Web: { screen: Web },
