@@ -135,6 +135,32 @@ export default class CardOne extends Component {
             </TouchableOpacity>
         </CardItem>
         <CardItem>
+            <Left>
+                <TouchableOpacity onPress={this.upVote} >
+                    <Icon name={this.state.post.upvoted?'like1':'like2'} size={25} color='#1979e8c9'/>
+                </TouchableOpacity>
+                <Text style={{marginRight: 20}}>
+                    {this.state.post.upvotesCount}
+                </Text>
+                <TouchableOpacity onPress={this.downVote} >
+                    <Icon name={this.state.post.downvoted?'dislike1':'dislike2'} size={25} color='#ff3838'/>
+                </TouchableOpacity>
+                <Text style={{marginRight: 20}}>
+                    {this.state.post.downvotesCount}
+                </Text>
+                <TouchableOpacity onPress={this.favoritePost} >
+                    <Icon name={this.state.post.favorited?'heart':'hearto'} size={25} color='#ff3399'/>
+                </TouchableOpacity>
+                <Text style={{marginRight: 20}}>
+                    {this.state.post.favoritesCount}
+                </Text>
+                <TouchableOpacity onPress={this.props.openPost} >
+                    <Icon name={'wechat'} size={25} color='#78c257'/>
+                </TouchableOpacity>
+                <Text style={{marginRight: 20}}>
+                    {this.state.post.commentsCount}
+                </Text>
+            </Left>
             <Right style={{ display: 'flex', justifyContent: 'flex-end' }}>
                 <Text style={{ color: '#ccc', fontSize:13, paddingRight: 0, marginRight: 0, float: 'right' }} >{ this.handleDateTime(this.state.post.createdAt) }</Text>
             </Right>
