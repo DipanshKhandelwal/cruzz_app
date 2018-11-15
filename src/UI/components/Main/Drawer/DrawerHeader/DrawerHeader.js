@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 class DrawerHeader extends Component {
     render() {
 
-        // if(!this.props.user){
-        //     this.props.navigation.navigate('Login')
-        // }
+        if(!this.props.user){
+            this.props.navigation.navigate('Login')
+        }
 
         return (
             <View style={{
@@ -34,7 +34,7 @@ class DrawerHeader extends Component {
                         fontSize: 20,
                         color: '#383838'
                     }} >
-                    Display Name
+                    { this.props.user? this.props.user.first_name + " " + this.props.user.last_name : null }
                 </Text>
         
                 <Text
