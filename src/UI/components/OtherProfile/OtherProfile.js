@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import { ScrollView, View, Text, Image, RefreshControl } from "react-native";
-import CardOne from "../Main/Cards/CardOne";
+import CardPost from "../Main/Cards/CardPost";
 import { Thumbnail, Button } from "native-base";
 import Following from '../Main/Following/Following.js';
 const axios = require('axios');
@@ -182,7 +182,7 @@ class OtherProfile extends Component {
             }
             {
                 _.map(this.props.posts, (item, index)=>
-                    <CardOne
+                    <CardPost
                         key={index}
                         post={item}
                         details={() => {

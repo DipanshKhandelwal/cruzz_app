@@ -5,7 +5,7 @@ import Image from 'react-native-remote-svg';
 import Icon from 'react-native-vector-icons/AntDesign';
 const axios = require('axios');
 
-export default class CardOne extends Component {
+export default class CardPost extends Component {
 
     state = {
         post: null

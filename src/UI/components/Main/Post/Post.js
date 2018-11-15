@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { View, Text, TextInput, Button, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TextInput, Button, TouchableOpacity, ScrollView, Dimensions } from "react-native";
 import Image from 'react-native-remote-svg';
 import { connect } from 'react-redux';
 import { postDescriptionChanged, postBodyChanged, postTitleChanged, createPost, postReset } from '../../../../actions';
@@ -37,7 +37,6 @@ class Post extends Component {
                     color: 'blue',
                     marginBottom: 50
                 }}
-                // onPress={() => this.props.navigation.navigate('Drawer')}
                 onPress={() => this.onCreatePostPress()}
             />
         );
@@ -54,14 +53,18 @@ class Post extends Component {
             <ScrollView
                 style={{
                     display: 'flex',
+                    height: Dimensions.get('window').height,
                     flex: 1,
                     backgroundColor: '#ebf7f9',
-                    padding: 0,
+                    padding: 10,
                     margin: 0
                 }}
             >
     
             <View style={{
+                display: 'flex',
+                flex:1,
+                height: Dimensions.get('window').height*0.9,
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 backgroundColor: '#fff',
@@ -69,7 +72,7 @@ class Post extends Component {
                 marginRight: 15,
                 marginLeft: 15,
                 elevation: 10,
-                marginBottom: 30
+                marginBottom: 30,
             }}>
             
                 <View style={{
@@ -106,8 +109,7 @@ class Post extends Component {
                             width: '100%',
                             height: 35,
                             color: '#3f3f3f',
-                            // borderRadius: 17
-                        }}
+=                        }}
                         onChangeText={this.onTitleChange.bind(this)}
                         value={this.props.title}
                     />
@@ -122,8 +124,7 @@ class Post extends Component {
                             height: 35,
                             margin: 10,
                             color: '#3f3f3f',
-                            // borderRadius: 17
-                        }}
+=                        }}
                         onChangeText={this.onBodyChange.bind(this)}
                         value={this.props.body}
                     />
@@ -137,8 +138,7 @@ class Post extends Component {
                             width: '100%',
                             height: 35,
                             color: '#3f3f3f',
-                            // borderRadius: 17
-                        }}
+=                        }}
                         type="password"
                         onChangeText={this.onDescriptionChange.bind(this)}
                         value={this.props.description}

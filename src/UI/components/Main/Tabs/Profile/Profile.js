@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React, {Component} from 'react';
 import { ScrollView, View, Text, Image, RefreshControl } from "react-native";
-import CardOne from "../../Cards/CardOne";
+import CardPost from "../../Cards/CardPost";
 import { Left, Right, Body, ListItem, Thumbnail, Input, Item, Content, Textarea } from "native-base";
 import MyHeader from '../../MyHeader/MyHeader';
 import Status from '../../Status/Status.js';
@@ -133,7 +133,7 @@ class Profile extends Component {
             />
             {
                 _.map(this.props.posts, (item, index)=>
-                    <CardOne
+                    <CardPost
                       refreshFeed={this._onRefresh}
                       openPost={()=>this.props.navigation.navigate('OtherPost', {post: item})}
                       openProfile={()=>{

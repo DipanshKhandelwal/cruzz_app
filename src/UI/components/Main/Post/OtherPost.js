@@ -8,7 +8,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import { bindActionCreators } from 'redux';
 const axios = require('axios');
 import _ from 'lodash';
-import CardComments from '../Cards/CardComments';
+import CardComment from '../Cards/CardComment';
 
 import {
     fetchFeed,
@@ -273,7 +273,7 @@ class OtherPost extends Component {
                 {
                     this.state.comments ?
                         _.map(this.state.comments, (item, index)=>
-                            <CardComments 
+                            <CardComment
                                 comment={item}
                                 openProfile={()=>{
                                     if(item.author.username != this.props.username){
