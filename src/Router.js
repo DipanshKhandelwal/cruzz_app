@@ -16,6 +16,7 @@ import Feed from './UI/components/Main/Tabs/Feed/Feed'
 import Profile from './UI/components/Main/Tabs/Profile/Profile'
 import Explore from './UI/components/Main/Tabs/Explore/Explore'
 import Web from './UI/components/Web/Web'
+import ConfirmEmail from './UI/components/ConfirmEmail/ConfirmEmail'
 
 const RootStack = createStackNavigator(
   {
@@ -26,6 +27,7 @@ const RootStack = createStackNavigator(
     Help: { screen: Help},
     FollowersList: { screen: FollowersList},
     Post: { screen: Post},
+    ConfirmEmail: { screen: ConfirmEmail },
     Web: { screen: Web },
     Drawer: {
       screen:  createDrawerNavigator(
