@@ -30,6 +30,26 @@ class OtherPost extends Component {
         this.setState({
           post: this.props.navigation.state.params.post
         });
+
+        axios.defaults.headers.common['Authorization'] = 'Token '+this.props.user.token;
+        axios.get(
+            `https://cruzz.herokuapp.com/api/post/view/${this.props.navigation.state.params.post.slug}`,
+        )
+        .then((response)=>{
+          this.setState({
+              post: response.data.post
+          })
+
+          axios.defaults.headers.common['Authorization'] = 'Token '+this.props.user.token;
+          axios.get(
+            `https://cruzz.herokuapp.com/api/post/${this.props.navigation.state.params.post.slug}/comments/view?limit=100&offset=0`,
+            )
+            .then((response)=>{
+                this.setState({
+                    comments: response.data.comments
+                })
+            })
+        })
     }
 
     render() {
