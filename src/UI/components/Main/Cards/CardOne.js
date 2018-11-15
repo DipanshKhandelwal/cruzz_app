@@ -1,9 +1,21 @@
 import React, { Component } from 'react';
 import { TouchableOpacity } from "react-native";
-import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Icon, Left, Body, Right } from 'native-base';
+import { Container, Header, Content, Card, CardItem, Thumbnail, Text, Button, Left, Body, Right } from 'native-base';
 import Image from 'react-native-remote-svg';
+import Icon from 'react-native-vector-icons/AntDesign';
+const axios = require('axios');
 
 export default class CardOne extends Component {
+
+    state = {
+        post: null
+    }
+
+    componentDidMount() {
+        this.setState({
+          post: this.props.post
+        });
+    }
 
     handleDateTime = (date) => {
         const dateLocal = new Date(date);
@@ -11,38 +23,46 @@ export default class CardOne extends Component {
     }
 
   render() {
+
+    if(this.state.post == null) return null;
+
     return (
         <Card>
         <CardItem>
             <Left>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={this.props.openProfile}>
             {
-                this.props.post.author ? 
-                <Thumbnail
-                    source={{ uri: this.props.post.author.image }}
-                />
-                : 
-                <Thumbnail source={require('../../../../images/profile.jpg')} style={{ marginBottom: 10 }} />
+                this.state.post.author ?
+                    this.state.post.author.image?
+                        <Thumbnail
+                            source={{ uri: this.state.post.author.image }}
+                        />
+                        :
+                        <Thumbnail source={require('../../../../images/profile.jpg')} style={{ marginBottom: 10 }} />
+                    :
+                    null
             }
             </TouchableOpacity>
             <Body>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.props.openPost} >
                     <Text>
-                        { this.props.post.title }
+                        { this.state.post.title }
                     </Text>
                 </TouchableOpacity>
-                <Text note>{this.props.post.author.first_name + " " + this.props.post.author.last_name} ( @{this.props.post.author.username} )</Text>
+                <Text note>{this.state.post.author.first_name + " " + this.state.post.author.last_name} ( @{this.state.post.author.username} )</Text>
             </Body>
             </Left>
         </CardItem>
-        <CardItem cardBody>
+        <CardItem>
+            <TouchableOpacity onPress={this.props.openPost} >
             <Text style={{ marginLeft: 30 }} >
-                { this.props.post.body }
+                { this.state.post.body }
             </Text>
+            </TouchableOpacity>
         </CardItem>
         <CardItem>
             <Right style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                <Text style={{ color: '#ccc', fontSize:13, paddingRight: 0, marginRight: 0, float: 'right' }} >{ this.handleDateTime(this.props.post.createdAt) }</Text>
+                <Text style={{ color: '#ccc', fontSize:13, paddingRight: 0, marginRight: 0, float: 'right' }} >{ this.handleDateTime(this.state.post.createdAt) }</Text>
             </Right>
         </CardItem>
         </Card>
