@@ -55,13 +55,39 @@ class OtherProfile extends Component {
     }
   
     componentDidMount() {
+      this.fetchFollowers();
+      this.fetchFollowing();
+    }
+
+    fetchFollowing = () => {
+      axios.defaults.headers.common['Authorization'] = 'Token '+this.props.user.token;
+      axios.get(
+          `https://cruzz.herokuapp.com/api/profile/following/?user=${this.props.navigation.state.params.user.username}&limit=100&offset=0`,
+      )
+      .then((response)=>{
+        this.setState({
+          following: response.data.profiles
+        })
+      })
+    }
+
+    fetchFollowers = () => {
+      axios.get(
+        `https://cruzz.herokuapp.com/api/profile/followers/?user=${this.props.navigation.state.params.user.username}&limit=100&offset=0`,
+    )
+    .then((response)=>{
+      this.setState({
+        followers: response.data.profiles
+      })
+    })
     }
 
     _onRefresh = () => {
+      this.fetchFollowers();
+      this.fetchFollowing();
     }
 
     render() {
-
       if(this.props.user.username == this.props.navigation.state.params.user.username){
         this.props.navigation.navigate('Profile')
       }
