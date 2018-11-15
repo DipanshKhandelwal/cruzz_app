@@ -20,8 +20,8 @@ import {
 const INITIAL_STATE = {
     // LOGIN
     loginEmail: '',
-    loginUsername: 'cruzzapp',
-    loginPassword: 'cruzzapppass',
+    loginUsername: '',
+    loginPassword: '',
     loginError: '',
     loginLoading: false,
     // SIGN UP
