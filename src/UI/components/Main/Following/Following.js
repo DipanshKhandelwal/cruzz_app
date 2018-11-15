@@ -27,6 +27,7 @@ const following = (props) => {
 
                 <Button
                     transparent
+                    onPress={props.clickFollowers}
                     style={{
                         flex :1,
                         justifyContent: 'center',
@@ -46,6 +47,7 @@ const following = (props) => {
 
                 <Button
                     transparent
+                    onPress={props.clickFollowing}
                     style={{
                         flex :1,
                         justifyContent: 'center',
