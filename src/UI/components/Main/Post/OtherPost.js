@@ -16,6 +16,82 @@ import {
 
 class OtherPost extends Component {
 
+    upVote = () => {
+        const URI = 'https://cruzz.herokuapp.com/api/post/' + this.state.post.slug + '/upvote/';
+        if(this.state.post.upvoted) {
+          axios.delete(URI).then(res => {
+            this.setState({
+              post: res.data.post
+            });
+          }).catch(err => {
+            console.log(err.response);
+          });
+        } else {
+          axios.get(URI).then(res => {
+            console.log(res.data);
+            this.setState({
+              post: res.data.post
+            });
+            if(this.state.post.downvoted) {
+              this.downVote();
+            }
+          }).catch(err => {
+            console.log(err.response);
+          });
+        }
+        this.props.fetchFeed(this.props.user);
+    }
+    
+    downVote = () => {
+        const URI = 'https://cruzz.herokuapp.com/api/post/' + this.state.post.slug + '/downvote/';
+        if(this.state.post.downvoted) {
+          axios.delete(URI).then(res => {
+            this.setState({
+              post: res.data.post
+            });
+            // this.props.loaded();
+          }).catch(err => {
+            console.log(err.response);
+            // this.props.loaded();
+          });
+        } else {
+          axios.get(URI).then(res => {
+            this.setState({
+              post: res.data.post
+            });
+            if(this.state.post.upvoted) {
+              this.upVote();
+            }
+          }).catch(err => {
+            console.log(err.response);
+          });
+        }
+        this.props.fetchFeed(this.props.user);
+    }
+
+    favoritePost = () => {
+        const URI = 'https://cruzz.herokuapp.com/api/post/' + this.state.post.slug + '/favorite/';
+        if(this.state.post.favorited) {
+          axios.delete(URI).then(res => {
+            this.setState({
+              post: res.data.post
+            });
+          }).catch(err => {
+            console.log(err.response);
+          });
+        } else {
+          axios.get(URI).then(res => {
+            console.log(res.data);
+            this.setState({
+              post: res.data.post
+            });
+          }).catch(err => {
+            console.log(err.response);
+          });
+        }
+        this.props.fetchFeed(this.props.user);
+    }
+
     handleDateTime = (date) => {
         const dateLocal = new Date(date);
         return (String(dateLocal.toDateString()));
