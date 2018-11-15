@@ -126,6 +126,8 @@ class Profile extends Component {
 
             <Status press={()=> this.props.navigation.navigate('Post')} />
             <Following
+              clickFollowers = {()=>this.props.navigation.navigate('FollowersList', { list: this.props.followers, type:'Followers' })}
+              clickFollowing = {()=>this.props.navigation.navigate('FollowersList', { list: this.props.following, type:'Following' })}
               followers={ this.props.followers ? this.props.followers.length : 0 }
               following={ this.props.following ? this.props.following.length : 0 }
             />
