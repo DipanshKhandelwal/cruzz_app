@@ -43,21 +43,6 @@ const status = (props) => {
                     <Text style={{fontWeight: 'bold'}} >Post</Text>
                 </Button>
 
-                <Button
-                    transparent
-                    style={{
-                        flex :1,
-                        justifyContent: 'center',
-                        flexDirection: 'row',
-                        padding: 5,
-                        backgroundColor: '#dededeb5',
-                        borderRadius: 0,
-                        borderBottomRightRadius: 5,
-                    }}>
-                    <Icon name='photo' size={25} style={{marginRight: 25}} color='#ff2323ba'/>
-                    <Text style={{fontWeight: 'bold'}} >Image</Text>
-                </Button>
-
             </View>
         </View>
     );
