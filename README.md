@@ -2,7 +2,19 @@
 
 Welcome aboard!
 
-### Steps to run
+### Website
+
+* #### Repository - [https://github.com/mohitkyadav/cruzz-web/](https://github.com/mohitkyadav/cruzz-web/)
+
+* #### Link - [https://mohitkyadav.github.io/cruzz-web/](https://mohitkyadav.github.io/cruzz-web/)
+
+### API
+
+* #### Repository - [https://github.com/Monal5031/cruzz](https://github.com/Monal5031/cruzz)
+
+* #### Docs Reference - [https://github.com/Monal5031/cruzz/blob/master/docs/API_Docs.md](https://github.com/Monal5031/cruzz/blob/master/docs/API_Docs.md)
+
+## Steps to run
 
 * Clone the repository
 
